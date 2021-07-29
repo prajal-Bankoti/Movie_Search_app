@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        background-color: darkgrey;
+      }
+      #box {
+        width: 25%;
+        height: 550px;
+        margin: auto;
+        background-color: white;
+        display: none;
+      }
+      #box img {
+        width: 100%;
+        height: 65%;
+        margin: auto;
+        background-color: white;
+      }
+      #input {
+        width: 20%;
+        height: 27px;
+        margin-left: 36%;
+        background-color: white;
+        font-size: 20px;
+        border-radius: 3px;
+      }
+      #input ~ button {
+        width: 8%;
+        height: 33px;
+        margin-bottom: 30px;
+        background-color: white;
+        border-radius: 5px;
+        padding-top: 7px;
+        font-weight: bold;
+        margin-left: 2%;
+      }
+      #box div {
+        background-color: white;
+        font-family: sans-serif;
+        display: flex;
+      }
+      #box:hover {
+        box-shadow: 2px 2px 6px 4px rgb(59, 59, 59);
+      }
+      #box > div > span {
+        background-color: white;
+        margin-bottom: 10px;
+        width: 40%;
+      }
+      #div {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <input placeholder="Search about movies" type="text" name="" id="input" />
+    <button onclick="searchMovi()">Submit</button>
+    <div id="box">
+      <img alt="" id="img" />
+      <div>
+        <span id="div">Title -</span>
+        <span id="title">C</span>
+      </div>
+      <div>
+        <span id="div">Actors -</span>
+        <span id="actors">Actors:</span>
+      </div>
+      <div>
+        <span id="div">Language -</span>
+        <span id="language">Language</span>
+      </div>
+      <div>
+        <span id="div">Year -</span>
+        <span id="year">Year</span>
+      </div>
+      <div>
+        <span id="div">Imdb Rating -</span>
+        <span id="imdbRating">Year</span>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  async function searchMovi() {
+    let city = document.getElementById("input").value;
+    let img = document.getElementById("img");
+    document.getElementById("box").style.display = "block";
+    try {
+      let res = await fetch(
+        `http://www.omdbapi.com/?t=${city}&apikey=b7518171`
+      );
+      let data = await res.json();
+      console.log(data);
+      img.src = data.Poster;
+      document.getElementById("title").innerHTML = data.Title;
+      document.getElementById("actors").innerHTML = data.Actors;
+      document.getElementById("language").innerHTML = data.Language;
+      document.getElementById("year").innerHTML = data.Year;
+      document.getElementById("imdbRating").innerHTML = data.imdbRating;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+</script>
